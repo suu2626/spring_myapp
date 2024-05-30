@@ -7,15 +7,15 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 情報更新リクエストデータ
+ * ショップ情報更新リクエストデータ
  *
  */
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class UserUpdateRequest extends UserRequest implements Serializable {
+public class ShopUpdateRequest extends ShopRequest implements Serializable {
 
   /**
-   * ユーザーID
+   * ショップID
    */
   @NotNull
   private Long id;

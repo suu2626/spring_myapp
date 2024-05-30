@@ -1,0 +1,65 @@
+<!DOCTYPE html><!-- shop/view.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/head :: head_fragment(title = 'ショップ詳細', scripts = ~{::script}, links = ~{::link})">
+</head>
+
+<body>
+	<div class="container">
+		<div class="d-flex justify-content-between align-items-center">
+			<h1>ショップ詳細</h1>
+			<div class="button-container">
+				<a th:href="@{/shop/{id}/edit(id=*{id})}" class="btn btn-primary" th:if="${isOwner}">編集</a>
+				<a href="/shop/list" class="btn btn-secondary">一覧に戻る</a>
+				<a th:href="@{/products/add(shopId=*{id})}" class="btn btn-success" th:if="${isOwner}">商品登録</a>
+			</div>
+		</div>
+		<div th:if="${isOwner}" class="text-orange">
+			あなたのショップです。
+		</div>
+		<div th:object="${shopData}">
+			<div class="row mx-md-n5">
+				<div class="col-2 pt-3 border bg-light">名前</div>
+				<div class="col pt-3 border">
+					<p th:text="*{name}"></p>
+				</div>
+			</div>
+			<div class="row mx-md-n5">
+				<div class="col-2 pt-3 border bg-light">説明</div>
+				<div class="col pt-3 border">
+					<p th:text="*{description}"></p>
+				</div>
+			</div>
+			<div class="row mx-md-n5">
+				<div class="col-2 pt-3 border bg-light">登録日</div>
+				<div class="col pt-3 border">
+					<p th:text="${#dates.format(shopData.createdAt, 'yyyy-MM-dd')}"></p>
+				</div>
+			</div>
+		</div>
+		<br />
+		<br />
+		<h2>商品一覧</h2>
+		<a th:href="@{/products/{id}/download(id=*{id})}" class="btn btn-outline-primary">CSVダウンロード</a>
+		<div class="product-container">
+			<div th:each="product : ${products}" class="product-card">
+				<h6>
+					<a th:href="@{/products/{id}(id=${product.id})}" class="btn btn-outline-info"
+						th:text="${product.name}"></a>
+				</h6>
+				<p th:text="${product.description}"></p>
+				<p th:text="'価格: ' + ${product.price} + '円'"></p>
+				<p th:text="'在庫: ' + ${product.stock}"></p>
+			</div>
+		</div>
+		<br />
+		<br />
+		<div class="text-center">
+			<a th:href="@{/shop/{id}/delete(id=*{id})}" class="btn btn-danger" th:if="${isOwner}">このショップを削除する</a>
+		</div>
+	</div>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/list.css}">
+</body>
+
+</html>

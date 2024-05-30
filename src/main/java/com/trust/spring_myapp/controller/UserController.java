@@ -12,10 +12,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.trust.spring_myapp.dto.UserRequest;
 import com.trust.spring_myapp.dto.UserUpdateRequest;
 import com.trust.spring_myapp.entity.User;
 import com.trust.spring_myapp.service.UserService;
@@ -50,8 +50,8 @@ public class UserController {
 	 * @return ユーザー情報一覧画面
 	 */
 	@GetMapping(value = "/user/add")
-	public String displayAdd(Model model) {
-		model.addAttribute("userRequest", new UserRequest());
+	public String showRegistrationForm(Model model) {
+		model.addAttribute("user", new User());
 		return "user/add";
 	}
 
@@ -61,22 +61,30 @@ public class UserController {
 	 * @param model Model
 	 * @return ユーザー情報一覧画面
 	 */
-	@RequestMapping(value = "/user/create", method = RequestMethod.POST)
-	public String create(@Validated @ModelAttribute UserRequest userRequest, BindingResult result, Model model) {
-
-		if (result.hasErrors()) {
-			// 入力チェックエラーの場合
-			List<String> errorList = new ArrayList<String>();
-			for (ObjectError error : result.getAllErrors()) {
-				errorList.add(error.getDefaultMessage());
-			}
-			model.addAttribute("validationError", errorList);
-			return "user/add";
-		}
-		// ユーザー情報の登録
-		userService.create(userRequest);
-		return "redirect:/user/list";
-	}
+	@PostMapping("/user/create")
+    public String addUser(User user, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "user/add";
+        }
+        userService.addUser(user);
+        return "redirect:/login";
+    }
+//	@RequestMapping(value = "/user/create", method = RequestMethod.POST)
+//	public String create(@Validated @ModelAttribute UserRequest userRequest, BindingResult result, Model model) {
+//
+//		if (result.hasErrors()) {
+//			// 入力チェックエラーの場合
+//			List<String> errorList = new ArrayList<String>();
+//			for (ObjectError error : result.getAllErrors()) {
+//				errorList.add(error.getDefaultMessage());
+//			}
+//			model.addAttribute("validationError", errorList);
+//			return "user/add";
+//		}
+//		// ユーザー情報の登録
+//		userService.create(userRequest);
+//		return "redirect:/user/list";
+//	}
 
 	/**
 	 * ユーザー情報詳細画面を表示

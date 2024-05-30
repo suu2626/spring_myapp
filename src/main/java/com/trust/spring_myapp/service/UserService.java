@@ -2,8 +2,10 @@ package com.trust.spring_myapp.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +27,23 @@ public class UserService {
 	 */
 	@Autowired
 	UserRepository userRepository;
+	/**
+	 * ユーザー情報を取得
+	 */
+	public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+	
+	/**
+	 * パスワードエンコーダー
+	 */
+	@Autowired
+    private PasswordEncoder passwordEncoder;
+	
+	public void addUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+    }
 
 	/**
 	 * ユーザー情報 全検索

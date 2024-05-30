@@ -1,0 +1,28 @@
+<!DOCTYPE html><!-- /shop/mypage -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/head :: head_fragment(title = 'ショップ詳細', scripts = ~{::script}, links = ~{::link})">
+</head>
+<meta charset="UTF-8">
+<title>マイページ</title>
+<body>
+	<div class="container">
+		<h1>マイページ</h1>
+		<h2>こんにちは、<span th:text="${username}">User</span>さん</h2>
+		<h3>あなたのショップ一覧</h3>
+		<div class="shop-container">
+			<div th:each="shop : ${shops}" class="shop-card">
+				<h2 th:text="${shop.name}"></h2>
+				<p th:text="${shop.description}"></p>
+				<div>
+					<a th:href="@{/shop/{id}(id=${shop.id})}" class="btn btn-primary">詳細</a>
+				</div>
+			</div>
+		</div>
+		<br />
+            <a href="/shop/list" class="btn btn-secondary">一覧に戻る</a>
+	</div>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/list.css}">
+</body>
+</html>

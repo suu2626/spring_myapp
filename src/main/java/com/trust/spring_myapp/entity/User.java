@@ -1,6 +1,6 @@
-	package com.trust.spring_myapp.entity;
+package com.trust.spring_myapp.entity;
 	
-	import java.util.Date;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 	
 	/**
-	 * ユーザー情報 Entity
+	 * ショップ情報 Entity
 	 */
 	@Entity
 	@Data

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Top</title>
-    <meta charset="utf-8" />
-  </head>
-  <body>
-    <h1>トップページ</h1>
-  </body>
+
+<head th:replace="common/head :: head_fragment(title = 'ユーザー新規登録', scripts = ~{::script}, links = ~{::link})"></head>
+<meta http-equiv="refresh" content="0;url=/login">
+<body>
+	<h1>Top</h1>
+</body>
+
 </html>
