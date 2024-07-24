@@ -15,14 +15,14 @@ public class SecurityConfig {
 
 	@Bean // このメソッドの返り値をSpringのBeanとして登録します
 	public PasswordEncoder passwordEncoder() { // パスワードエンコーダー（パスワードのハッシュ化）を提供するメソッド
-		return new BCryptPasswordEncoder(); // パスワードをBCrypt方式でハッシュ化するエンコーダーを返します
+		return new BCryptPasswordEncoder(); // パスワードをBCrypt方式でハッシュ化するエンコーダーを返す
 	}
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 				.authorizeHttpRequests(authorizeRequests -> authorizeRequests // 認証リクエストを設定
-				.requestMatchers("/login", "/user/add", "/user/create").permitAll() // "/login"と"/user/add"へのリクエストは認証なしで許可します
+				.requestMatchers("/login", "/user/add", "/user/create").permitAll() // "/login"と"/user/add"へのリクエストは認証なしで許可
 				.anyRequest().authenticated() // それ以外の全てのリクエストは認証が必要
 				)
 				.formLogin(formLogin -> formLogin
